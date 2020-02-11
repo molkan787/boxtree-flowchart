@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoxTree</title>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="index.js"></script>
+    <script>
+        window.onkeypress = function(e) { // For developement purpose
+            if(e.keyCode == 18){
+                window.location.reload()
+            }else if(e.keyCode == 9){
+                const currentWindow = require('electron').remote.getCurrentWindow()
+                currentWindow.openDevTools()
+            }
+        }
+      </script>
+</head>
+<body>
+    <div class="top_border"></div>
+    <div class="content">
+        <div id="toolbox">
+            <div class="item">
+                <img src="assets/icons/Task.png">
+            </div>
+            <div class="item">
+                <img src="assets/icons/InitialTransition.png">
+            </div>
+            <div class="item">
+                <img src="assets/icons/Transition.png">
+            </div>
+            <div class="item">
+                <img src="assets/icons/Juntion.png">
+            </div>
+        </div>
+        <div id="breadcrumb">
+            <span>Chart</span>
+            <img src="assets/icons/BreadcrumbSeparator.png" >
+            <span>Search Task</span>
+        </div>
+    </div>
+</body>
+</html>

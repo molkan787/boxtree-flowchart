@@ -1,0 +1,116 @@
+@font-face {
+  font-family: 'Expressway';
+  src: url("../assets/fonts/expressway_rg.ttf") format("truetype");
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-family: 'Expressway';
+}
+
+img {
+  -webkit-user-drag: none;
+}
+
+.top_border {
+  position: fixed;
+  height: 1px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #dad5d5;
+  z-index: 200;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+
+#toolbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #fafafa;
+  border-right: 1px solid lightgray;
+  -webkit-box-shadow: 0 0 2px #ccc;
+          box-shadow: 0 0 2px #ccc;
+  z-index: 100;
+  padding: 7px;
+}
+
+#toolbox .item {
+  width: 36px;
+  height: 36px;
+  position: relative;
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 7px;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+
+#toolbox .item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+#toolbox .item:active {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+}
+
+#toolbox .item img {
+  width: calc(100% - 14px);
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+#breadcrumb {
+  position: fixed;
+  top: 0;
+  left: 50px;
+  width: calc(100% - 50px);
+  height: 35px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #fafafa;
+  border-bottom: 1px solid lightgray;
+  -webkit-box-shadow: 0 0 2px #ccc;
+          box-shadow: 0 0 2px #ccc;
+  z-index: 101;
+  padding: 8px;
+}
+
+#breadcrumb img {
+  height: 100%;
+  float: left;
+  margin: 0 7px;
+}
+
+#breadcrumb span {
+  cursor: pointer;
+  float: left;
+  color: #555;
+  font-size: 14px;
+}
+
+#breadcrumb span:hover {
+  color: #222;
+}
+/*# sourceMappingURL=style.css.map */

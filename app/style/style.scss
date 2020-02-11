@@ -1,0 +1,94 @@
+@import './font.scss';
+
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    user-select: none;
+    font-family: 'Expressway';
+}
+img{
+    -webkit-user-drag: none;
+}
+.top_border{
+    position: fixed;
+    height: 1px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #dad5d5;
+    z-index: 200;
+}
+.content{
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+
+#toolbox{
+    $w: 50px;
+    $pad: 7px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: $w;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: rgb(250, 250, 250);
+    border-right: 1px solid rgb(211, 211, 211);
+    box-shadow: 0 0 2px #ccc;
+    z-index: 100;
+    padding: $pad;
+    .item{
+        $sw: $w - $pad * 2;
+        width: $sw;
+        height: $sw;
+        position: relative;
+        border-radius: 6px;
+        cursor: pointer;
+        box-sizing: border-box;
+        padding: 7px;
+        transition: background-color 0.3s;
+        &:hover{
+            background-color: rgba($color: #000000, $alpha: 0.1);
+        }
+        &:active{
+            transform: scale(0.95);
+        }
+        img{
+            width: calc(100% - 14px);
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+#breadcrumb{
+    position: fixed;
+    top: 0;
+    left: 50px;
+    width: calc(100% - 50px);
+    height: 35px;
+    box-sizing: border-box;
+    background-color: rgb(250, 250, 250);
+    border-bottom: 1px solid rgb(211, 211, 211);
+    box-shadow: 0 0 2px #ccc;
+    z-index: 101;
+    padding: 8px;
+    img{
+        height: 100%;
+        float: left;
+        margin: 0 7px;
+    }
+    span{
+        cursor: pointer;
+        float: left;
+        color: #555;
+        font-size: 14px;
+        &:hover{
+            color: #222;
+        }
+    }
+}

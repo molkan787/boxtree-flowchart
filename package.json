@@ -1,0 +1,14 @@
+{
+  "name": "boxtree",
+  "version": "1.0.0",
+  "description": "Flow Chart App",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Dahmane Seghier @ dahmane.pl",
+  "license": "ISC",
+  "devDependencies": {
+    "electron-builder": "^22.3.2"
+  }
+}
