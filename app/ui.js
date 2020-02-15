@@ -22,3 +22,9 @@ window.addEventListener('load', () => {
         }
     }
 })
+
+
+function waitPanel(state){
+    const el = document.getElementById('waitPanel');
+    el.style.display = state ? 'block' : 'none';
+}

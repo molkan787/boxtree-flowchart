@@ -1,6 +1,7 @@
 const cytoscape = require('cytoscape')
 const WithEvents = require('./Libs/WithEvents')
 const EditPanel = require('./editPanel')
+const uuid = require('uuid');
 
 module.exports = class Chart extends WithEvents {
 
@@ -10,6 +11,7 @@ module.exports = class Chart extends WithEvents {
         this.quickActions = quickActions;
         this.init(parentId)
 
+        this.clipboard = null;
         this.idPointer = 0;
         this.position = {
             x: 0,
@@ -34,23 +36,6 @@ module.exports = class Chart extends WithEvents {
         })
 
         this.editPanel.on('save', data => this.saveEdits(data))
-    }
-
-    openChart(data){
-        this.cy.json(data);
-        for(let el of this.cy.elements().toArray()){
-            this.addListeners(el)
-            if(el.data('isChart') == 'yes'){
-                this.onDoubleTap(el, () => this.openSubChart(el));
-            }
-        }
-        const start = this.cy.$('[which="start"]');
-        const edge = this.cy.$('[which="initial-transition"]');
-        if(start && edge){
-            start.off('cxttap');
-            this._setStartComps(start, edge);
-        }
-        this.$emit('startNode', start.length > 0);
     }
 
     init(parentId) {
@@ -82,7 +67,7 @@ module.exports = class Chart extends WithEvents {
                     }
                 },
                 {
-                    selector: "[which='juntion']",
+                    selector: "[which='junction']",
                     style: {
                         "background-color": 'white',
                         "border-width": '2',
@@ -153,6 +138,27 @@ module.exports = class Chart extends WithEvents {
         })
     }
 
+    openChart(data){
+        this.cy.json(data);
+        this.prepareElements(this.cy.elements());
+        const start = this.cy.$('[which="start"]');
+        const edge = this.cy.$('[which="initial-transition"]');
+        if(start && edge){
+            start.off('cxttap');
+            this._setStartComps(start, edge);
+        }
+        this.$emit('startNode', start.length > 0);
+    }
+
+    prepareElements(els){
+        for(let el of els.toArray()){
+            this.addListeners(el)
+            if(el.data('isChart') == 'yes'){
+                this.onDoubleTap(el, () => this.openSubChart(el));
+            }
+        }
+    }
+
     openSubChart(el){
         this.$emit('subchartTap', el)
     }
@@ -215,6 +221,7 @@ module.exports = class Chart extends WithEvents {
             data: {
                 which: 'start'
             },
+            selectable: false,
             position: this.position
         })
         const { target: targetEl } = await this.cy.nodes().promiseOn('tap');
@@ -226,10 +233,10 @@ module.exports = class Chart extends WithEvents {
     _setStartComps(sourceEl, edge){
         this.comps.startNode = sourceEl;
         this.comps.startEdge = edge;
-        sourceEl.on('tap', () => setTimeout(() => edge.select(), 1));
-        edge.on('tap', () => setTimeout(() => sourceEl.select(), 1));
+        // sourceEl.on('tap', () => setTimeout(() => edge.select(), 1));
+        // edge.on('tap', () => setTimeout(() => sourceEl.select(), 1));
         edge.on('remove', () => {
-            this.comps.startNode.remove();
+            if(this.comps.startNode) this.comps.startNode.remove();
             this.comps.startNode = null;
             this.comps.startEdge = null;
             this.$emit('startNode', false)
@@ -252,7 +259,8 @@ module.exports = class Chart extends WithEvents {
                 source: sourceEL.data('id'),
                 target: targetEl.data('id'),
                 isLoop: isLoop ? 'yes' : 'no',
-            }
+            },
+            selectable: type !== 'initial-transition',
         };
         const el = this.cy.add(edge);
         if(!skipListeners){
@@ -324,6 +332,39 @@ module.exports = class Chart extends WithEvents {
         const pos = {x, y};
         this.currentElementPos = pos;
         quickActions.show(pos, allowedActions)
+    }
+
+    selectAll(){
+        this.cy.elements().select();
+    }
+
+    copy(){
+        const idsMap = {}
+        const els = this.cy.$(':selected').clone();
+        els.forEach(el => {
+            const newId = uuid();
+            idsMap[el._private.data.id] = newId;
+            el._private.data.id = newId;
+            if(el.isEdge()){
+                el._private.data.source = idsMap[el._private.data.source] || el._private.data.source;
+                el._private.data.target = idsMap[el._private.data.target] || el._private.data.target;
+            }
+        });
+        this.clipboard = els;
+    }
+    cut(){
+        const els = this.cy.$(':selected');
+        els.remove();
+        this.clipboard = els;
+    }
+    paste(){
+        if(this.clipboard){
+            this.cy.elements().unselect();
+            this.clipboard.restore();
+            this.prepareElements(this.clipboard);
+            this.clipboard.forEach(el => el.position('y', el.position('y') - 20));
+            this.clipboard = null;
+        }
     }
 
 }

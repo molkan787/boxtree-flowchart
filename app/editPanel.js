@@ -24,7 +24,7 @@ module.exports = class EditPanel extends WithEvents{
         this.type = type;
         this._setData(data, type);
         this._setPosition(pos, type);
-        this._showEl();
+        this._showEl(document.getElementById(type === 'task' ? 'edit_Label' : 'edit_Label2'));
     }
 
     // ====================================
@@ -84,9 +84,12 @@ module.exports = class EditPanel extends WithEvents{
         this.el.style.left = x + 'px';
     }
 
-    _showEl(){
+    _showEl(el2Focus){
         this.el.style.display = 'block';
-        setTimeout(() => this.el.style.opacity = 1, 1);
+        setTimeout(() => {
+            this.el.style.opacity = 1;
+            if(el2Focus) el2Focus.focus();
+        }, 1);
     }
 
     _hideEl(){

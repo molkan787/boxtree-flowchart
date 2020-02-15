@@ -1,15 +1,17 @@
 let projectFilename = '';
+let chartTitle = 'My Chart';
 let chart = null;
-const charts = {};
+let charts = {};
 let currentChartId = 'root';
 let chartIdPointer = 1;
 let quickActions;
+let breadcrumb;
 const Chart = require('./chart')
 const QuickActions = require('./quickActions')
 const Breadcrumb = require('./breadcrumb')
 
 window.addEventListener('load', () => {
-    const breadcrumb = new Breadcrumb();
+    breadcrumb = new Breadcrumb();
     quickActions = new QuickActions({selector: '#quickActions'})
     chart = new Chart({ parentId: 'chart', quickActions })
     chart.on('startNode', exist => setInitTransiState(!exist))
@@ -21,15 +23,23 @@ window.addEventListener('load', () => {
         }
         breadcrumb.addItem(el.data('text'), chartId);
         openChart(chartId);
-    })
-    breadcrumb.addItem('Main', 'root');
+    });
+    breadcrumb.addItem(chartTitle, 'root');
     breadcrumb.on('itemClicked', chartId => openChart(chartId))
+    
+    document.body.oncopy = () => chart.copy();
+    document.body.oncut = () => chart.cut();
+    document.body.onpaste = () => chart.paste();
 })
 
 function openChart(id){
-    charts[currentChartId] = chart.cy.json(); // saving current chart before opening new one
+    backCurrentChart();
     chart.openChart(charts[id]);
     currentChartId = id;
+}
+
+function backCurrentChart(){
+    charts[currentChartId] = chart.cy.json();
 }
 
 function makeSubchart() {
@@ -46,5 +56,56 @@ function setInitTransiState(state) {
 
 const electron = require('electron')
 electron.ipcRenderer.on('menuItemClick', (event, itemName) => {
-    console.log(itemName)
+    switch (itemName) {
+        case 'save':
+            backCurrentChart();
+            PM.save(true).then(fn => setProjectFilename(fn));
+            break;
+        case 'save_as':
+            backCurrentChart();
+            PM.save().then(fn => setProjectFilename(fn));
+            break;
+        case 'open':
+            openProject();
+            break;
+        case 'select_all':
+            chart.selectAll();
+            break;
+        case 'copy':
+            chart.copy();
+            break;
+        case 'cut':
+            chart.cut();
+            break;
+        case 'paste':
+            chart.paste();
+            break;
+        case 'convert':
+            this.convert();
+            break;
+        default:
+            break;
+    }
 })
+
+async function openProject(){
+    const filename = await PM.open();
+    if(!filename) return;
+    setProjectFilename(filename);
+    chart.openChart(charts[currentChartId]);
+    breadcrumb.build();
+}
+
+function setProjectFilename(str){
+    if(str == null) return;
+    projectFilename = str;
+    document.title = `BoxTree (${str})`
+}
+
+async function convert(){
+    waitPanel(true);
+    backCurrentChart();
+    projectFilename = await PM.save(true);
+    PM.convert()
+    waitPanel(false)
+}

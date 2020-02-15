@@ -37,7 +37,7 @@
                 <img src="assets/icons/Transition.png">
             </div>
 
-            <div class="item" data-tippy-content="Junction" el-type="juntion" draggable="true">
+            <div class="item" data-tippy-content="Junction" el-type="junction" draggable="true">
                 <img src="assets/icons/Juntion.png">
             </div>
 
@@ -62,7 +62,7 @@
             <div id="editPanelTask" style="display: none;">
                 <!-- <h4>Edit Task</h4> -->
                 <span>Text:</span>
-                <textarea id="edit_Label" placeholder="Text"></textarea>
+                <textarea id="edit_Label" placeholder="Text" autofocus></textarea>
                 <span>Decomposition:</span>
                 <select id="edit_Decomposition">
                     <option value="serial">Serial</option>
@@ -71,7 +71,7 @@
             </div>
             <div id="editPanelTransition">
                 <span>Text:</span>
-                <textarea id="edit_Label2" placeholder="Text"></textarea>
+                <textarea id="edit_Label2" placeholder="Text" autofocus></textarea>
                 <span>Condition:</span>
                 <input id="edit_Condition" placeholder="...">
                 <!-- <span>Transition condition:</span>
@@ -86,5 +86,6 @@
             <button id="edit_okBtn" class="btn1">Ok</button>
         </div>
     </div>
+    <div id="waitPanel"></div>
 </body>
 </html>

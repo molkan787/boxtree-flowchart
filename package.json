@@ -32,7 +32,9 @@
     "electron-builder": "^22.3.2"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "cytoscape": "^3.14.0",
-    "tippy.js": "^5.2.0"
+    "tippy.js": "^5.2.0",
+    "uuid": "^3.4.0"
   }
 }

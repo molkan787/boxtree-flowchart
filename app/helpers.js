@@ -1,6 +1,13 @@
 const electron = require('electron')
-const dialog = electron.dialog
+const dialog = electron.remote.dialog
 const fs = require('fs')
+
+const options = {
+    filters: [{
+      name: 'JSON File',
+      extensions: ['json']
+    }]
+};
 
 module.exports = {
 
@@ -10,15 +17,22 @@ module.exports = {
         return el.value;
     },
 
+    changeExt(path, newExt){
+        let parts = path.split('.');
+        parts.pop();
+        parts = parts.join('.');
+        return parts + '.' + newExt;
+    },
+
     async promptFile() {
-        const resp = await dialog.showOpenDialog()
+        const resp = await dialog.showOpenDialog(options)
         if (resp.canceled) return null
 
         return resp.filePaths[0]
     },
 
     async promptSaveFile() {
-        const resp = await dialog.showSaveDialog()
+        const resp = await dialog.showSaveDialog(options)
         if (resp.canceled) return null
 
         return resp.filePath
