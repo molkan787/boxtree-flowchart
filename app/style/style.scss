@@ -7,6 +7,9 @@ html, body{
     user-select: none;
     font-family: 'Expressway';
 }
+textarea, input, select{
+    font-family: 'Expressway';
+}
 img{
     -webkit-user-drag: none;
 }
@@ -55,6 +58,10 @@ img{
         &:active{
             transform: scale(0.95);
         }
+        &[disabled]{
+            pointer-events: none;
+            opacity: 0.3;
+        }
         img{
             width: calc(100% - 14px);
             margin: 0;
@@ -90,5 +97,116 @@ img{
         &:hover{
             color: #222;
         }
+    }
+}
+
+
+#workboard{
+    height: calc(100% - 35px);
+    width: calc(100% - 50px);
+    position: fixed;
+    top: 35px;
+    left: 50px;
+}
+
+#chart{
+    width: 100%;
+    height: 100%;
+}
+
+.floatingPanel{
+    position: fixed;
+    box-sizing: border-box;
+    background-color: rgb(243, 243, 243);
+    border: 1px solid rgb(129, 129, 129);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.288);
+    border-radius: 4px;
+    outline: none;
+    z-index: 2000;
+    transition: opacity 0.2s;
+    padding: 4px;
+}
+
+#quickActions{
+    display: none;
+    width: 100px;
+    height: 32px;
+    top: 300px;
+    left: 300px;
+    .item{
+        height: 100%;
+        display: inline-block;
+        box-sizing: border-box;
+        flex-grow: 1;
+        text-align: center;
+        border-radius: 4px;
+        padding: 2px;
+        cursor: pointer;
+        &:hover{
+            background-color: rgba(0, 0, 0, 0.15);
+        }
+        &[disabled]{
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        img{
+            height: 100%;
+        }
+    }
+}
+
+#editPanel{
+    top: 150px;
+    left: 200px;
+    width: 200px;
+    transition: opacity 0.3s;
+    display: none;
+    opacity: 0;
+    h4{
+        margin: 3px 0 6px 0;
+        text-align: center;
+        font-size: 15px;
+    }
+    span{
+        display: inline-block;
+        margin: 4px 0 2px 0;
+        &:first-child{
+            margin: -1px 0 2px 0;
+        }
+    }
+    textarea{
+        width: 100%;
+        height: 80px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        resize: none;
+    }
+    select, input{
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 4px;
+        padding: 4px;
+        border: 1px solid #A9A9A9;
+    }
+    button{
+        margin-top: 20px;
+    }
+}
+
+.btn1{
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #aaa;
+    background-color: white;
+    color: #4a4a4a;
+    box-shadow: 0 0 2px #bdbdbd;
+    font-weight: bold;
+    padding: 6px;
+    cursor: pointer;
+    &:active{
+        opacity: 0.7;
+    }
+    &:hover{
+        background-color: #f9f9f9;
     }
 }

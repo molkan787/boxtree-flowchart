@@ -14,6 +14,10 @@ html, body {
   font-family: 'Expressway';
 }
 
+textarea, input, select {
+  font-family: 'Expressway';
+}
+
 img {
   -webkit-user-drag: none;
 }
@@ -72,6 +76,11 @@ img {
           transform: scale(0.95);
 }
 
+#toolbox .item[disabled] {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
 #toolbox .item img {
   width: calc(100% - 14px);
   margin: 0;
@@ -112,5 +121,137 @@ img {
 
 #breadcrumb span:hover {
   color: #222;
+}
+
+#workboard {
+  height: calc(100% - 35px);
+  width: calc(100% - 50px);
+  position: fixed;
+  top: 35px;
+  left: 50px;
+}
+
+#chart {
+  width: 100%;
+  height: 100%;
+}
+
+.floatingPanel {
+  position: fixed;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #f3f3f3;
+  border: 1px solid #818181;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.288);
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.288);
+  border-radius: 4px;
+  outline: none;
+  z-index: 2000;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  padding: 4px;
+}
+
+#quickActions {
+  display: none;
+  width: 100px;
+  height: 32px;
+  top: 300px;
+  left: 300px;
+}
+
+#quickActions .item {
+  height: 100%;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  text-align: center;
+  border-radius: 4px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+#quickActions .item:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+#quickActions .item[disabled] {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+#quickActions .item img {
+  height: 100%;
+}
+
+#editPanel {
+  top: 150px;
+  left: 200px;
+  width: 200px;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  display: none;
+  opacity: 0;
+}
+
+#editPanel h4 {
+  margin: 3px 0 6px 0;
+  text-align: center;
+  font-size: 15px;
+}
+
+#editPanel span {
+  display: inline-block;
+  margin: 4px 0 2px 0;
+}
+
+#editPanel span:first-child {
+  margin: -1px 0 2px 0;
+}
+
+#editPanel textarea {
+  width: 100%;
+  height: 80px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 4px;
+  resize: none;
+}
+
+#editPanel select, #editPanel input {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 4px;
+  padding: 4px;
+  border: 1px solid #A9A9A9;
+}
+
+#editPanel button {
+  margin-top: 20px;
+}
+
+.btn1 {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #aaa;
+  background-color: white;
+  color: #4a4a4a;
+  -webkit-box-shadow: 0 0 2px #bdbdbd;
+          box-shadow: 0 0 2px #bdbdbd;
+  font-weight: bold;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.btn1:active {
+  opacity: 0.7;
+}
+
+.btn1:hover {
+  background-color: #f9f9f9;
 }
 /*# sourceMappingURL=style.css.map */

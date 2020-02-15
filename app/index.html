@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BoxTree</title>
     <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="../node_modules/tippy.js/dist/tippy.css">
+    <script src="ui.js"></script>
     <script src="index.js"></script>
+    <script src="projectManager.js"></script>
     <script>
         window.onkeypress = function(e) { // For developement purpose
             if(e.keyCode == 18){
@@ -21,23 +24,66 @@
     <div class="top_border"></div>
     <div class="content">
         <div id="toolbox">
-            <div class="item">
+
+            <div class="item" data-tippy-content="Task" el-type="task" draggable="true">
                 <img src="assets/icons/Task.png">
             </div>
-            <div class="item">
+
+            <div class="item" data-tippy-content="Initial transition" el-type="initial-transition" id="tb-item-initial-transition">
                 <img src="assets/icons/InitialTransition.png">
             </div>
-            <div class="item">
+
+            <div class="item" data-tippy-content="Transition" el-type="transition">
                 <img src="assets/icons/Transition.png">
             </div>
-            <div class="item">
+
+            <div class="item" data-tippy-content="Junction" el-type="juntion" draggable="true">
                 <img src="assets/icons/Juntion.png">
             </div>
+
         </div>
         <div id="breadcrumb">
-            <span>Chart</span>
-            <img src="assets/icons/BreadcrumbSeparator.png" >
-            <span>Search Task</span>
+        </div>
+        <div id="workboard">
+            <div id="chart"></div>
+        </div>
+        <div id="quickActions" tabindex="0" class="floatingPanel">
+            <div class="item" action="delete" data-tippy-content="Delete" data-tippy-placement="top">
+                <img src="assets/icons/delete.png">
+            </div>
+            <div class="item" action="edit" data-tippy-content="Edit" data-tippy-placement="top">
+                <img src="assets/icons/edit.png">
+            </div>
+            <div class="item" action="convert" data-tippy-content="Convert to Sub-Chart" data-tippy-placement="top">
+                <img src="assets/icons/diagram.png">
+            </div>
+        </div>
+        <div id="editPanel" class="floatingPanel" tabindex="0">
+            <div id="editPanelTask" style="display: none;">
+                <!-- <h4>Edit Task</h4> -->
+                <span>Text:</span>
+                <textarea id="edit_Label" placeholder="Text"></textarea>
+                <span>Decomposition:</span>
+                <select id="edit_Decomposition">
+                    <option value="serial">Serial</option>
+                    <option value="parallel">Parallel</option>
+                </select>
+            </div>
+            <div id="editPanelTransition">
+                <span>Text:</span>
+                <textarea id="edit_Label2" placeholder="Text"></textarea>
+                <span>Condition:</span>
+                <input id="edit_Condition" placeholder="...">
+                <!-- <span>Transition condition:</span>
+                <input id="edit_transition_condition" placeholder="...">
+                <span>Condition action:</span>
+                <input id="edit_condition_action" placeholder="...">
+                <span>Transition action:</span>
+                <input id="edit_transition_action" placeholder="..."> -->
+                <span>Priority:</span>
+                <input id="edit_Priority" type="number" min="1" value="1">
+            </div>
+            <button id="edit_okBtn" class="btn1">Ok</button>
         </div>
     </div>
 </body>
